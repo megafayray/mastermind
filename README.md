@@ -1,5 +1,8 @@
 Build a Mastermind game from the command line where you have 12 turns to guess the secret code, starting with you guessing the computer’s random code
 
+House Rules:
+- The computer generated code will not include duplicates or blanks
+
 ______________________________________________________________________________________________________________________________________________________
 
 Build the game assuming the computer randomly selects the secret colors and the human player must guess them. 
@@ -13,3 +16,6 @@ If you choose to modify the rules, you can provide the computer additional infor
 For example, you can start by having the computer guess randomly, but keep the ones that match exactly. 
 You can add a little bit more intelligence to the computer player so that, if the computer has guessed the right color but the wrong position, 
 its next guess will need to include that color somewhere.
+
+
+______________________________________________________________________________________________________________________________________________________
