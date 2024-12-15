@@ -28,7 +28,7 @@ class Game # rubocop:disable Style/Documentation,Style/FrozenStringLiteralCommen
     elsif @turn_number < 12
       @turn_number += 1
       feedback
-      puts "Here is some feedback: #{@hints}. Try again!"
+      puts "Here is some feedback: #{@hints.sort}. Try again!"
       guessing
     else
       puts 'Gameover'
