@@ -22,7 +22,6 @@ class Game # rubocop:disable Style/Documentation,Style/FrozenStringLiteralCommen
   end
 
   def compare
-    puts "Computer code is #{@computer.code}"
     if @computer.code == @input
       puts 'You guessed the secret code!'
     elsif @turn_number < 12
