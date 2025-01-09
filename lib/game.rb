@@ -1,17 +1,30 @@
-class Game # rubocop:disable Style/Documentation,Style/FrozenStringLiteralComment
-  def startup
+class Game # rubocop:disable Style/Documentation
+  def initialize
     @turn_number = 1
     @computer = Computer.new
-    @computer.generate_code
+    @human = Human.new
+  end
 
-    puts "#{@computer.code}" # debugging
-    puts 'I am the codemaster. I have selected a secret code. Your job as the codebreaker is to guess my code within 12 turns. You can select from 6 colours:' # rubocop:disable Layout/LineLength
-    puts 'Enter "r" for red, "o" for orange, "y" for yellow, etc'
-    puts 'I will NEVER put duplicates or blanks in my code'
-    puts ''
-    puts 'Please enter your guess as a 4 digit code, then press enter'
+  def begin
+    puts 'Welcome to Mastermind!'
+    puts 'Press "M" to be the CodeMaster or Press "B" to be the CodeBreaker'
 
-    guessing
+    @choice = gets.chomp.upcase
+
+    if @choice == 'B'
+      @codemaster = 'computer'
+      @computer.generate_code
+      @computer.instructions
+      guessing
+    elsif @choice == 'M'
+      @codemaster = 'human'
+      @computer.generate_possibilities
+      @human.instructions
+      run_it
+    else
+      puts 'Please try again, selecting "M" or "B"'
+      @choice
+    end
   end
 
   def guessing
@@ -21,9 +34,36 @@ class Game # rubocop:disable Style/Documentation,Style/FrozenStringLiteralCommen
     compare
   end
 
+  def run_it
+    computer_guess_attempt while @turn_number < 13
+  end
+
+  def computer_guess_attempt
+    guess = @computer.guess
+    puts "Computer's guess on turn number #{@turn_number} is #{guess}"
+    puts 'Debugging:'
+    puts "Secret code: #{@human.secret_code}"
+    puts "Computer's guess: #{guess}"
+    if guess == @human.secret_code
+      puts 'The computer guessed your code!'
+    else
+      @turn_number += 1
+      @computer.update_possibilities
+      if @turn_number < 13
+        puts 'The computer will try again'
+      else
+        puts 'Gameover - the computer failed to guess the code within 12 turns.'
+      end
+    end
+  end
+
   def compare
     if @computer.code == @input
-      puts 'You guessed the secret code!'
+      if @codemaster == 'computer'
+        puts 'You guessed the secret code!'
+      elsif @codemaster == 'human'
+        puts 'The computer guessed your code!'
+      end
     elsif @turn_number < 12
       @turn_number += 1
       feedback

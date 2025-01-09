@@ -5,11 +5,13 @@ House Rules:
 
 ______________________________________________________________________________________________________________________________________________________
 
+DONE:
 Build the game assuming the computer randomly selects the secret colors and the human player must guess them. 
 Remember that you need to give the proper feedback on how good the guess was each turn!
 Now refactor your code to allow the human player to choose whether they want to be the creator of the secret code or the guesser.
-
 Build it out so that the computer will guess if you decide to choose your own secret colors. 
+
+TO DO:
 You may choose to implement a computer strategy that follows the rules of the game or you can modify these rules.
 
 If you choose to modify the rules, you can provide the computer additional information about each guess. 
