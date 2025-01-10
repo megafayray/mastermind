@@ -3,27 +3,26 @@ class Game # rubocop:disable Style/Documentation
     @turn_number = 1
     @computer = Computer.new
     @human = Human.new
+    puts 'Welcome to Mastermind!'
+    puts 'Press "M" to be the CodeMaster or Press "B" to be the CodeBreaker'
   end
 
   def begin
-    puts 'Welcome to Mastermind!'
-    puts 'Press "M" to be the CodeMaster or Press "B" to be the CodeBreaker'
-
-    @choice = gets.chomp.upcase
-
-    if @choice == 'B'
-      @codemaster = 'computer'
-      @computer.generate_code
-      @computer.instructions
-      guessing
-    elsif @choice == 'M'
-      @codemaster = 'human'
-      @computer.generate_possibilities
-      @human.instructions
-      run_it
-    else
-      puts 'Please try again, selecting "M" or "B"'
-      @choice
+    until @choice == 'B' || @choice == 'M'
+      @choice = gets.chomp.upcase
+      if @choice == 'B'
+        @codemaster = 'computer'
+        @computer.generate_code
+        @computer.instructions
+        guessing
+      elsif @choice == 'M'
+        @codemaster = 'human'
+        @computer.generate_possibilities
+        @human.instructions
+        computer_guess_attempt
+      else
+        puts 'Please try again, selecting "M" or "B"'
+      end
     end
   end
 
@@ -34,25 +33,23 @@ class Game # rubocop:disable Style/Documentation
     compare
   end
 
-  def run_it
-    computer_guess_attempt while @turn_number < 13
-  end
-
   def computer_guess_attempt
-    guess = @computer.guess
-    puts "Computer's guess on turn number #{@turn_number} is #{guess}"
-    puts 'Debugging:'
-    puts "Secret code: #{@human.secret_code}"
-    puts "Computer's guess: #{guess}"
-    if guess == @human.secret_code
-      puts 'The computer guessed your code!'
-    else
-      @turn_number += 1
-      @computer.update_possibilities
-      if @turn_number < 13
-        puts 'The computer will try again'
+    while @turn_number < 13
+      guess = @computer.guess
+      puts "Computer's guess on turn number #{@turn_number} is #{guess}"
+      puts 'Debugging:'
+      puts "Secret code: #{@human.secret_code}"
+      puts "Computer's guess: #{guess}"
+      if guess == @human.secret_code
+        puts 'The computer guessed your code!'
       else
-        puts 'Gameover - the computer failed to guess the code within 12 turns.'
+        @turn_number += 1
+        @computer.update_possibilities
+        if @turn_number < 13
+          puts 'The computer will try again'
+        else
+          puts 'Gameover - the computer failed to guess the code within 12 turns.'
+        end
       end
     end
   end
