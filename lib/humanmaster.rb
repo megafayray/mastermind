@@ -7,6 +7,26 @@ class Human # rubocop:disable Style/FrozenStringLiteralComment,Style/Documentati
     puts 'Do not put duplicates or blanks in your code'
     puts ''
     puts 'Please enter your secret four-digit code, then press enter'
-    @secret_code = gets.chomp.upcase.split(//)
+    @secret_code = []
+    until @secret_code.uniq.length == 4
+      input = gets.chomp.upcase
+
+      if input.include?(" ")
+        puts "Your code cannot include spaces - try again!"
+        next
+      end
+
+      @secret_code = input.split(//)
+
+      if @secret_code.length != 4
+        puts "Your code needs to be four (4) digits long - try again!"
+        next
+      end
+
+      if @secret_code.uniq.length != 4
+        puts "Your code cannot contain duplicates - try again!"
+        next
+      end
+    end
   end
 end
