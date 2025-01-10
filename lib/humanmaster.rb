@@ -8,7 +8,8 @@ class Human # rubocop:disable Style/FrozenStringLiteralComment,Style/Documentati
     puts ''
     puts 'Please enter your secret four-digit code, then press enter'
     @secret_code = []
-    until @secret_code.uniq.length == 4
+    @colours = %w[R O Y G B P]
+    until @secret_code.uniq.length == 4 && all_valid_colours?
       input = gets.chomp.upcase
 
       if input.include?(" ")
@@ -27,6 +28,20 @@ class Human # rubocop:disable Style/FrozenStringLiteralComment,Style/Documentati
         puts "Your code cannot contain duplicates - try again!"
         next
       end
+
+      if !all_valid_colours?
+        puts "Your code contains invalid colours - try again!"
+        next
+      end
+
     end
   end
+
+  private #using this because this helper method is only to be available internally, and cannot be called outside of the Human class
+  #could do the same with the length and uniq length checks as well
+
+  def all_valid_colours?
+    @secret_code.all? { |char| @colours.include?(char) }
+  end
+
 end

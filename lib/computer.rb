@@ -1,5 +1,5 @@
 class Computer # rubocop:disable Style/Documentation,Style/FrozenStringLiteralComment
-  attr_reader :code, :guess, :possibilities
+  attr_reader :code, :guess, :possibilities, :colours
 
   def initialize
     @colours = %w[R O Y G B P]
